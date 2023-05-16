@@ -22,7 +22,7 @@
         "import/no-extraneous-dependencies": "off",
         "no-unused-vars": "off",
         "import/prefer-default-export": "off",
-        "import/no-import-module-exports": "off"
-        // "no-shadow":"off"
+        "import/no-import-module-exports": "off",
+        "no-shadow":"off"
     }
 }
