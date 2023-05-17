@@ -2,13 +2,13 @@ const books = require('./book');
 
 const booksAdd = async (request, h) => {
   const {
-    name, year, author, summary, publisher, pageCount, readPage,
+    name, year, author, summary, publisher, pageCount, readPage, reading,
   } = request.payload;
 
   if (!name) {
     const response = h.response({
       status: 'fail',
-      message: 'Gagal menambahkan buku. Mohon isi nama buku.',
+      message: 'Gagal menambahkan buku. Mohon isi nama buku',
     });
     response.code(400);
     return response;
@@ -17,7 +17,7 @@ const booksAdd = async (request, h) => {
   if (readPage > pageCount) {
     const response = h.response({
       status: 'fail',
-      message: 'Gagal menambahkan buku. readPage tidak boleh lebih besar dari pageCount.',
+      message: 'Gagal menambahkan buku. readPage tidak boleh lebih besar dari pageCount',
     });
     response.code(400);
     return response;
@@ -39,7 +39,7 @@ const booksAdd = async (request, h) => {
   const finished = readPage === pageCount;
 
   const newBook = {
-    name, year, author, summary, publisher, pageCount, readPage, finished, insertedAt, updatedAt, id,
+    name, year, author, summary, publisher, pageCount, readPage, reading, finished, insertedAt, updatedAt, id,
   };
 
   books.push(newBook);
@@ -49,7 +49,7 @@ const booksAdd = async (request, h) => {
   if (isSuccess) {
     const response = h.response({
       status: 'success',
-      message: 'Buku berhasil ditambahkan.',
+      message: 'Buku berhasil ditambahkan',
       data: {
         bookId: id,
       },
@@ -58,7 +58,7 @@ const booksAdd = async (request, h) => {
     return response;
   }
   const response = h.response({
-    status: 'fail',
+    status: 'Error',
     message: 'Gagal menambahkan buku.',
   });
   response.code(500);
@@ -96,9 +96,10 @@ const booksEdits = (request, h) => {
   const { id } = request.params;
 
   const {
-    name, year, author, summary, publisher, pageCount, readPage,
+    name, year, author, summary, publisher, pageCount, readPage, reading,
   } = request.payload;
   const updatedAt = new Date().toISOString();
+  const finished = readPage === pageCount;
 
   if (!name) {
     const response = h.response({
@@ -130,6 +131,8 @@ const booksEdits = (request, h) => {
       pageCount,
       readPage,
       updatedAt,
+      finished,
+      reading,
     };
 
     const response = h.response({
