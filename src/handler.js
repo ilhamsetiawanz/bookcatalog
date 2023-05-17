@@ -23,15 +23,6 @@ const booksAdd = async (request, h) => {
     return response;
   }
 
-  if (!author || !publisher) {
-    const response = h.response({
-      status: 'fail',
-      message: 'Gagal menambahkan buku. Mohon isi nama pengarang dan penerbit.',
-    });
-    response.code(400);
-    return response;
-  }
-
   const { nanoid } = await import('nanoid');
   const id = nanoid(20);
   const insertedAt = new Date().toISOString();
@@ -87,7 +78,7 @@ const bookGetById = (request, h) => {
   }
   const response = h.response({
     status: 'fail',
-    message: 'Buku tidak ditemukan.',
+    message: 'Buku tidak ditemukan',
   });
   response.code(404);
   return response;
@@ -104,7 +95,7 @@ const booksEdits = (request, h) => {
   if (!name) {
     const response = h.response({
       status: 'fail',
-      message: 'Gagal menambahkan buku. Mohon isi nama buku.',
+      message: 'Gagal memperbarui buku. Mohon isi nama buku',
     });
     response.code(400);
     return response;
@@ -113,7 +104,7 @@ const booksEdits = (request, h) => {
   if (readPage > pageCount) {
     const response = h.response({
       status: 'fail',
-      message: 'Gagal memperbarui buku. readPage tidak boleh lebih besar dari pageCount.',
+      message: 'Gagal memperbarui buku. readPage tidak boleh lebih besar dari pageCount',
     });
     response.code(400);
     return response;
@@ -145,7 +136,7 @@ const booksEdits = (request, h) => {
 
   const response = h.response({
     status: 'fail',
-    message: 'Buku tidak ditemukan.',
+    message: 'Buku tidak ditemukan',
   });
   response.code(404);
   return response;
