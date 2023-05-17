@@ -24,5 +24,6 @@
         "import/prefer-default-export": "off",
         "import/no-import-module-exports": "off",
         "no-shadow":"off"
+        ,"max-len":"off"
     }
 }

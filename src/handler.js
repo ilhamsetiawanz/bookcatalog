@@ -36,9 +36,10 @@ const booksAdd = async (request, h) => {
   const id = nanoid(20);
   const insertedAt = new Date().toISOString();
   const updatedAt = insertedAt;
+  const finished = readPage === pageCount;
 
   const newBook = {
-    name, year, author, summary, publisher, pageCount, readPage, insertedAt, updatedAt, id,
+    name, year, author, summary, publisher, pageCount, readPage, finished, insertedAt, updatedAt, id,
   };
 
   books.push(newBook);
@@ -67,7 +68,7 @@ const booksAdd = async (request, h) => {
 const bookGet = () => ({
   status: 'success',
   data: {
-    books,
+    books: books.map((book) => ({ id: book.id, name: book.name, publisher: book.publisher })),
   },
 });
 
@@ -99,8 +100,26 @@ const booksEdits = (request, h) => {
   } = request.payload;
   const updatedAt = new Date().toISOString();
 
+  if (!name) {
+    const response = h.response({
+      status: 'fail',
+      message: 'Gagal menambahkan buku. Mohon isi nama buku.',
+    });
+    response.code(400);
+    return response;
+  }
+
+  if (readPage > pageCount) {
+    const response = h.response({
+      status: 'fail',
+      message: 'Gagal memperbarui buku. readPage tidak boleh lebih besar dari pageCount.',
+    });
+    response.code(400);
+    return response;
+  }
+
   const index = books.findIndex((book) => book.id === id);
-  if (index === -1) {
+  if (index !== -1) {
     books[index] = {
       ...books[index],
       name,
@@ -128,6 +147,7 @@ const booksEdits = (request, h) => {
   response.code(404);
   return response;
 };
+
 const booksRemove = (request, h) => {
   const { id } = request.params;
 
