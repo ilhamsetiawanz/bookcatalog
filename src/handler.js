@@ -128,7 +128,7 @@ const booksEdits = (request, h) => {
 
     const response = h.response({
       status: 'success',
-      message: 'Buku berhasil diperbaharui',
+      message: 'Buku berhasil diperbarui',
     });
     response.code(200);
     return response;
@@ -136,7 +136,7 @@ const booksEdits = (request, h) => {
 
   const response = h.response({
     status: 'fail',
-    message: 'Buku tidak ditemukan',
+    message: 'BGagal memperbarui buku. Id tidak ditemukan',
   });
   response.code(404);
   return response;
